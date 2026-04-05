@@ -6,6 +6,12 @@ Reads open GitHub issues, `HANDOFF.*` files, and an implementation plan; decompo
 work by crate; spawns independent sub-agents with strict test-first discipline and
 SOLID/hexagonal architecture enforcement; then integrates the results.
 
+## Installation
+
+```bash
+claude plugin add github:89jobrien/orca-strait
+```
+
 ## Components
 
 | Component | Type | Purpose |
