@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Reinstall the orca-strait plugin when plugin sources change so the cache stays fresh.
+
+PLUGIN_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null \
+  | grep -E '^(\.claude-plugin/|skills/|agents/|hooks/)' || true)
+
+if [ -z "$PLUGIN_FILES" ]; then
+  exit 0
+fi
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "[orca-strait] claude not on PATH — skipping plugin reinstall"
+  exit 0
+fi
+
+echo "[orca-strait] plugin sources changed — reinstalling..."
+claude plugin uninstall orca-strait --force 2>/dev/null || true
+claude plugin install orca-strait@local
+echo "[orca-strait] plugin reinstalled (restart Claude Code to apply)"

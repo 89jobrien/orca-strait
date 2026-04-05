@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Delegate to global pre-commit hook
+GLOBAL_HOOK="$HOME/.config/git/hooks/pre-commit"
+if [ -x "$GLOBAL_HOOK" ]; then
+  exec "$GLOBAL_HOOK" "$@"
+fi
