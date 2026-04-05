@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TDD Task List",
+  "description": "Schema for the decomposed task list produced by helpers/decompose.sh",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["crate", "task", "source", "independent"],
+    "properties": {
+      "crate": {
+        "type": "string",
+        "description": "Cargo workspace member name (matches -p flag)"
+      },
+      "task": {
+        "type": "string",
+        "description": "Human-readable task description"
+      },
+      "source": {
+        "type": "string",
+        "enum": ["issue", "handoff", "plan"],
+        "description": "Which context source this task came from"
+      },
+      "source_id": {
+        "type": ["string", "number"],
+        "description": "Issue number, handoff key, or plan section"
+      },
+      "independent": {
+        "type": "boolean",
+        "description": "True if this task has no cross-crate dependencies"
+      },
+      "blocked_by": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Crate names that must complete before this task can start"
+      },
+      "priority": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 3,
+        "description": "1=high (handoff next), 2=medium (plan), 3=low (issue backlog)"
+      }
+    }
+  },
+  "examples": [
+    {
+      "crate": "mbx",
+      "task": "Add RetryAdapter implementing the RetryPort trait",
+      "source": "handoff",
+      "source_id": "next[0]",
+      "independent": true,
+      "blocked_by": [],
+      "priority": 1
+    },
+    {
+      "crate": "devloop-api",
+      "task": "Generate OpenAPI spec from route definitions",
+      "source": "issue",
+      "source_id": 87,
+      "independent": true,
+      "blocked_by": [],
+      "priority": 3
+    },
+    {
+      "crate": "devloop-core",
+      "task": "Remove direct sqlx dependency, route through StoragePort",
+      "source": "plan",
+      "source_id": "Phase 1",
+      "independent": false,
+      "blocked_by": ["mbx"],
+      "priority": 2
+    }
+  ]
+}
