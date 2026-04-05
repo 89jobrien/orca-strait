@@ -2,6 +2,6 @@
   "name": "orca-strait",
   "version": "0.1.0",
   "description": "Parallel TDD sub-agent orchestrator for Rust workspaces. Reads issues, handoff files, and implementation plans, then spawns per-crate agents that follow strict test-first discipline.",
-  "author": "Joseph O'Brien",
+  "author": { "name": "Joseph O'Brien" },
   "keywords": ["rust", "tdd", "testing", "orchestration", "parallel", "workspace"]
 }
