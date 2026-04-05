@@ -1,10 +1,10 @@
 # orca-strait
 
-Parallel TDD sub-agent orchestrator for Rust workspaces.
+Parallel sub-agent orchestrator for Rust workspaces.
 
 Reads open GitHub issues, `HANDOFF.*` files, and an implementation plan; decomposes
 work by crate; spawns independent sub-agents with strict test-first discipline and
-SOLID/hexagonal architecture enforcement; then integrates the results.
+hexagonal architecture enforcement; then integrates the results.
 
 ## Installation
 
