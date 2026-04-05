@@ -1,4 +1,31 @@
 #!/usr/bin/env bash
+# Bump patch version in plugin.json when plugin sources are staged.
+
+MANIFEST=".claude-plugin/plugin.json"
+PLUGIN_STAGED=$(git diff --cached --name-only \
+  | grep -E '^(\.claude-plugin/|skills/|agents/|hooks/)' \
+  | grep -v "^$MANIFEST$" || true)
+
+if [ -n "$PLUGIN_STAGED" ] && [ -f "$MANIFEST" ]; then
+  current=$(grep '"version"' "$MANIFEST" | head -1 | sed 's/.*"version": *"\([^"]*\)".*/\1/')
+  major=$(echo "$current" | cut -d. -f1)
+  minor=$(echo "$current" | cut -d. -f2)
+  patch=$(echo "$current" | cut -d. -f3)
+
+  # minor bump if any new files are being added; patch bump if only modifications
+  NEW_FILES=$(git diff --cached --name-only --diff-filter=A \
+    | grep -E '^(\.claude-plugin/|skills/|agents/|hooks/)' || true)
+  if [ -n "$NEW_FILES" ]; then
+    next="$major.$((minor + 1)).0"
+  else
+    next="$major.$minor.$((patch + 1))"
+  fi
+
+  sed -i '' "s/\"version\": \"$current\"/\"version\": \"$next\"/" "$MANIFEST"
+  git add "$MANIFEST"
+  echo "[orca-strait] version bumped $current → $next"
+fi
+
 # Delegate to global pre-commit hook
 GLOBAL_HOOK="$HOME/.config/git/hooks/pre-commit"
 if [ -x "$GLOBAL_HOOK" ]; then
