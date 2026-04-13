@@ -9,7 +9,7 @@ init:
 
     # 1. Wire local hooks
     git config core.hooksPath .githooks
-    chmod +x .githooks/pre-commit .githooks/post-commit
+    chmod +x .githooks/pre-commit .githooks/post-commit .githooks/pre-push
     echo "    hooks: .githooks wired"
 
     # 2. Verify claude is available
@@ -42,7 +42,7 @@ init:
 
     # 5. Install / reinstall plugin
     claude plugin uninstall orca-strait --force 2>/dev/null || true
-    claude plugin install orca-strait@local
+    claude plugin install orca-strait@bazaar
     echo "    plugin: orca-strait installed"
 
     echo ""
@@ -52,5 +52,5 @@ init:
 reinstall:
     #!/usr/bin/env bash
     claude plugin uninstall orca-strait --force 2>/dev/null || true
-    claude plugin install orca-strait@local
+    claude plugin install orca-strait@bazaar
     echo "[orca-strait] reinstalled — restart Claude Code to apply"

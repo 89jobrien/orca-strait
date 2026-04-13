@@ -15,5 +15,5 @@ fi
 
 echo "[orca-strait] plugin sources changed — reinstalling..."
 claude plugin uninstall orca-strait --force 2>/dev/null || true
-claude plugin install orca-strait@local
+claude plugin install orca-strait@bazaar
 echo "[orca-strait] plugin reinstalled (restart Claude Code to apply)"
