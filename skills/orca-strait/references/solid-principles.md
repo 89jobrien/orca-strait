@@ -12,7 +12,9 @@ Composition Root (main.rs)
         ▼
 Domain Layer          ← traits (ports) + domain types + business logic
         ▲
-        │ implements
+        │
+    implements
+        │
 Infrastructure Adapters  ← one per external system (HTTP, DB, file, API)
 ```
 
